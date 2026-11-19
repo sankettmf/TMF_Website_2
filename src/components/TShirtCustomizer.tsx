@@ -34,12 +34,16 @@ const POSITION_PRESETS: PositionPreset[] = [
 interface ApparelModelData {
   title: string;
   uid: string;
+  cameraDistanceMultiplier?: number;
 }
+
+const DEFAULT_CAMERA_DISTANCE_MULTIPLIER = 1.14;
 
 // Clean embed options that disable Sketchfab UI controls, watermarks, hints, and info
 const SKETCHFAB_INIT_OPTIONS = {
   autostart: 1,
   preload: 1,
+  camera: 0,
   ui_controls: 0,
   ui_infos: 0,
   ui_watermark: 0,
@@ -61,10 +65,12 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
     mens: {
       title: 'T Shirt - Men',
       uid: '08f28f3c33494de7a29fd255e64441bf',
+      cameraDistanceMultiplier: 1.14,
     },
     womens: {
       title: 'Female White Casual Tucked-in T-Shirt',
       uid: 'fcbc4777e10144ec9a51d8a2b0204c28',
+      cameraDistanceMultiplier: 1.14,
     },
   },
   // 2. Collared Polo
@@ -72,10 +78,12 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
     mens: {
       title: 'Men Short Sleeved Solid Color Polo',
       uid: '670dad551f4243e39f116f5e5e038a5e',
+      cameraDistanceMultiplier: 1.14,
     },
     womens: {
       title: 'Women Classic Strip Polo Shirt',
       uid: '43470f9b12b64253bdeb41d337e7c9a3',
+      cameraDistanceMultiplier: 1.14,
     },
   },
   // 3. Warm Hoodie
@@ -83,22 +91,38 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
     mens: {
       title: 'Men Zip-up Hoodie',
       uid: '8e78ba296dfe40749caa57fb4d4e318f',
+      cameraDistanceMultiplier: 1.16,
     },
     womens: {
       title: 'Women Hooded T-Shirt',
       uid: '297d2abf5bb9475ab5fd0eb1bc0fee4f',
+      cameraDistanceMultiplier: 1.16,
     },
   },
 };
+
+interface SketchfabCameraLookAt {
+  position: [number, number, number];
+  target: [number, number, number];
+}
+
+interface SketchfabViewerApi {
+  start: () => void;
+  addEventListener: (event: string, cb: () => void) => void;
+  getCameraLookAt: (cb: (err: unknown, camera: SketchfabCameraLookAt) => void) => void;
+  setCameraLookAt: (
+    position: [number, number, number],
+    target: [number, number, number],
+    duration?: number,
+    cb?: () => void
+  ) => void;
+}
 
 type SketchfabClientConstructor = new (iframe: HTMLIFrameElement) => {
   init: (
     uid: string,
     options: Record<string, unknown> & {
-      success?: (api: {
-        start: () => void;
-        addEventListener: (event: string, cb: () => void) => void;
-      }) => void;
+      success?: (api: SketchfabViewerApi) => void;
       error?: () => void;
     }
   ) => void;
@@ -231,7 +255,10 @@ export const TShirtCustomizer: React.FC = () => {
   const estimate = calculateEstimatePrice(shirtType, placement, quantity);
 
   // Initialize Sketchfab Viewer API and wait for 'viewerready' before showing design overlay
-  const activeModelUid = APPAREL_MODELS[shirtType][modelGender].uid;
+  const activeModel = APPAREL_MODELS[shirtType][modelGender];
+  const activeModelUid = activeModel.uid;
+  const activeCameraMultiplier =
+    activeModel.cameraDistanceMultiplier ?? DEFAULT_CAMERA_DISTANCE_MULTIPLIER;
 
   useEffect(() => {
     let cancelled = false;
@@ -253,9 +280,24 @@ export const TShirtCustomizer: React.FC = () => {
             if (cancelled) return;
             api.start();
             api.addEventListener('viewerready', () => {
-              if (!cancelled) {
-                setIsModelLoaded(true);
-              }
+              if (cancelled) return;
+              api.getCameraLookAt((err, camera) => {
+                if (cancelled) return;
+                if (!err && camera) {
+                  const [px, py, pz] = camera.position;
+                  const [tx, ty, tz] = camera.target;
+                  const pulledBackPosition: [number, number, number] = [
+                    tx + (px - tx) * activeCameraMultiplier,
+                    ty + (py - ty) * activeCameraMultiplier,
+                    tz + (pz - tz) * activeCameraMultiplier,
+                  ];
+                  api.setCameraLookAt(pulledBackPosition, camera.target, 0, () => {
+                    if (!cancelled) setIsModelLoaded(true);
+                  });
+                } else {
+                  setIsModelLoaded(true);
+                }
+              });
             });
           },
           error: () => {
@@ -279,7 +321,7 @@ export const TShirtCustomizer: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, [activeModelUid]);
+  }, [activeModelUid, activeCameraMultiplier]);
 
   // Apply a preset position
   const applyPreset = (preset: PositionPreset) => {
@@ -467,7 +509,7 @@ export const TShirtCustomizer: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start lg:items-stretch">
           {/* Left Column: 3D Interactive Canvas & Model Viewer */}
-          <div className="lg:col-span-7 flex flex-col items-center">
+          <div className="lg:col-span-7 flex flex-col items-center min-w-0">
             {/* Top Toolbar: Men's / Women's [M] / [W] Model Selector & 3D/2D Toggle */}
             <div className="w-full flex flex-wrap items-center justify-between gap-2 mb-2.5 bg-white p-2 rounded-2xl border border-[#E8E4DC] shadow-sm">
               {/* Gender [M] / [W] Switcher */}
@@ -549,15 +591,15 @@ export const TShirtCustomizer: React.FC = () => {
                     allow="autoplay; fullscreen; xr-spatial-tracking"
                     className={`border-0 bg-white transition-opacity duration-300 ${
                       interactionMode === 'orbit' ? 'pointer-events-auto' : 'pointer-events-none'
-                    }`}
+                    } ${isModelLoaded ? 'opacity-100' : 'opacity-90'}`}
                     style={{
                       backgroundColor: '#FFFFFF',
-                      width: '106%',
-                      height: 'calc(100% + 130px)',
-                      marginTop: '-48px',
-                      marginBottom: '-82px',
-                      marginLeft: '-3%',
-                      marginRight: '-3%',
+                      width: '104%',
+                      height: 'calc(100% + 104px)',
+                      marginTop: '-52px',
+                      marginBottom: '-52px',
+                      marginLeft: '-2%',
+                      marginRight: '-2%',
                     }}
                   />
                 </div>
@@ -587,8 +629,8 @@ export const TShirtCustomizer: React.FC = () => {
                     top: `${posY}%`,
                     transform: `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale / 100})`,
                     transformOrigin: 'center center',
-                    width: '140px',
-                    height: '140px',
+                    width: '138px',
+                    height: '138px',
                   }}
                 >
                   {/* Visual Bounding Anchor Box for Precise Fitting */}
@@ -670,7 +712,7 @@ export const TShirtCustomizer: React.FC = () => {
                         style={{
                           fontFamily: fontFamily === 'Permanent Marker' ? '"Permanent Marker", cursive' : fontFamily,
                           color: textColor,
-                          fontSize: customText.length > 14 ? '18px' : customText.length > 8 ? '24px' : '30px',
+                          fontSize: customText.length > 14 ? '18px' : customText.length > 8 ? '23px' : '28px',
                           lineHeight: 1.05,
                           textShadow:
                             shirtColor === '#FFFFFF'
