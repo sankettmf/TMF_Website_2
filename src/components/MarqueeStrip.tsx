@@ -17,7 +17,7 @@ export const MarqueeStrip: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full mt-14 sm:mt-16 lg:mt-20 mb-8 sm:mb-10 lg:mb-12 bg-[#E5382C] py-4 overflow-hidden border-y border-[#D62E22] select-none shadow-sm">
+    <div className="relative w-full my-12 sm:my-14 lg:my-16 bg-[#E5382C] py-4 overflow-hidden border-y border-[#D62E22] select-none shadow-sm">
       <div className="flex animate-marquee-light whitespace-nowrap">
         {[...marqueeItems, ...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, idx) => (
           <div key={idx} className="flex items-center mx-5">

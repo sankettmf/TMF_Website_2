@@ -124,13 +124,23 @@ export const Footer: React.FC = () => {
               Our Products
             </h4>
             <ul className="space-y-2 text-xs font-medium">
-              {merchProducts.map((p) => (
-                <li key={p.id}>
-                  <a href="#products" className="footer-nav-link">
-                    {p.name}
-                  </a>
-                </li>
-              ))}
+              {merchProducts.map((p) => {
+                const footerLabels: Record<string, string> = {
+                  't-shirts': 'T-Shirts',
+                  caps: 'Caps',
+                  mugs: 'Mugs',
+                  bottles: 'Bottles',
+                  'mouse-pads': 'Mouse Pads',
+                  trophies: 'Trophies & Plaques',
+                };
+                return (
+                  <li key={p.id}>
+                    <a href="#products" className="footer-nav-link whitespace-nowrap">
+                      {footerLabels[p.id] ?? p.name}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
