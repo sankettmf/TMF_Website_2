@@ -861,7 +861,7 @@ export const TShirtCustomizer: React.FC = () => {
           </div>
 
           {/* Right Column: Customization Controls & Wholesale Quote Generator */}
-          <div className="lg:col-span-5 bg-white border border-[#E8E4DC] rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3.5 shadow-atelier">
+          <div className="lg:col-span-5 min-w-0 bg-white border border-[#E8E4DC] rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3.5 shadow-atelier">
             {/* Header: APPAREL SILHOUETTE SELECTOR (Crewneck Tee - Primary, Collared Polo, Warm Hoodie) */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
@@ -1087,7 +1087,7 @@ export const TShirtCustomizer: React.FC = () => {
             </div>
 
             {/* Price Estimate Summary & WhatsApp Direct Order Link */}
-            <div className="p-3.5 bg-[#f8fafc] rounded-xl border border-[#E8E4DC] flex items-center justify-between gap-3">
+            <div className="p-3.5 bg-[#f8fafc] rounded-xl border border-[#E8E4DC] flex flex-col items-stretch md:flex-row md:items-center md:justify-between gap-3">
               <div>
                 <span className="text-[11px] text-[#736E65] uppercase tracking-wider font-semibold block">
                   Total Quote Estimate
@@ -1106,7 +1106,7 @@ export const TShirtCustomizer: React.FC = () => {
                 href={getWhatsAppLink(generateWhatsAppMessage())}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#E5382C] hover:bg-[#CC2F24] text-white font-bold text-xs tracking-wider uppercase shadow-[0_4px_16px_rgba(229,56,44,0.3)] active:scale-95 transition-all shrink-0"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#E5382C] hover:bg-[#CC2F24] text-white font-bold text-xs tracking-wider uppercase shadow-[0_4px_16px_rgba(229,56,44,0.3)] active:scale-95 transition-all md:shrink-0"
               >
                 <Send size={14} />
                 <span>Send on WhatsApp</span>

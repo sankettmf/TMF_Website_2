@@ -462,6 +462,15 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   }
 }
 
+@keyframes marching-dots-flow-vertical {
+  0% {
+    background-position: 50% 0px;
+  }
+  100% {
+    background-position: 50% 24px;
+  }
+}
+
 @keyframes step-dash-flow {
   from {
     stroke-dashoffset: 0;
@@ -478,7 +487,19 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   transform: translateY(-50%);
   width: 2rem;
   height: 1rem;
-  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.step-connector-vertical-wrapper {
+  position: absolute;
+  bottom: -1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1rem;
+  height: 1.75rem;
   align-items: center;
   justify-content: center;
   z-index: 20;
@@ -504,12 +525,24 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   will-change: background-position;
 }
 
+.step-dotted-flow-line-vertical {
+  width: 3px;
+  height: 100%;
+  background-image: radial-gradient(circle, #E5382C 1.5px, transparent 1.6px);
+  background-size: 3px 8px;
+  background-repeat: repeat-y;
+  background-position: 50% 0px;
+  animation: marching-dots-flow-vertical 0.85s linear infinite;
+  will-change: background-position;
+}
+
 .step-flow-svg-line {
   animation: step-dash-flow 0.9s linear infinite;
 }
 
 /* Subtle glow enhancement when card is hovered */
-.group:hover .step-dotted-flow-line {
+.group:hover .step-dotted-flow-line,
+.group:hover .step-dotted-flow-line-vertical {
   filter: drop-shadow(0 0 4px rgba(229, 56, 44, 0.7));
 }
 

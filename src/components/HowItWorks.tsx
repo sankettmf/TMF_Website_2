@@ -27,14 +27,14 @@ export const HowItWorks: React.FC = () => {
         </div>
 
         {/* Steps Grid with Animated Flowing Connector Lines */}
-        <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 relative z-10">
+        <div className="relative overflow-x-hidden md:overflow-visible">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 md:gap-5 lg:gap-6 relative z-10">
             {howItWorksSteps.map((step, idx) => (
               <div
                 key={step.step}
                 className="relative bg-white border border-[#E8E4DC] rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-atelier shadow-atelier-hover group"
               >
-                {/* Continuous Flowing Dotted Connector to Next Step */}
+                {/* Continuous Flowing Dotted Connector to Next Step (Tablet & Desktop Horizontal) */}
                 {idx < howItWorksSteps.length - 1 && (
                   <div
                     className={`hidden ${
@@ -45,6 +45,16 @@ export const HowItWorks: React.FC = () => {
                     <div className="step-connector-flow">
                       <div className="step-dotted-flow-line" />
                     </div>
+                  </div>
+                )}
+
+                {/* Continuous Flowing Dotted Connector to Next Step (Mobile Vertical) */}
+                {idx < howItWorksSteps.length - 1 && (
+                  <div
+                    className="flex md:hidden step-connector-vertical-wrapper"
+                    aria-hidden="true"
+                  >
+                    <div className="step-dotted-flow-line-vertical" />
                   </div>
                 )}
                 <div>

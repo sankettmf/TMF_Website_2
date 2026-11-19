@@ -56,18 +56,18 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* 3-Column Quick Trust Strip */}
-            <div className="pt-5 grid grid-cols-3 gap-3 sm:gap-6 border-t border-[#E8E4DC] w-full text-xs sm:text-[13px] text-[#635F56] font-semibold">
-              <div className="flex items-center gap-2">
+            <div className="pt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-2.5 md:grid md:grid-cols-3 md:gap-6 border-t border-[#E8E4DC] w-full text-xs md:text-[13px] text-[#635F56] font-semibold">
+              <div className="flex items-center gap-1.5 md:gap-2">
                 <CheckCircle2 size={16} className="text-[#E5382C] flex-shrink-0" />
-                <span className="truncate">MOQ: 1 Piece</span>
+                <span className="md:truncate">MOQ: 1 Piece</span>
               </div>
-              <div className="flex items-center justify-center sm:justify-start gap-2 -ml-3">
+              <div className="flex items-center gap-1.5 md:gap-2 md:justify-start md:-ml-3">
                 <Clock size={16} className="text-[#E5382C] flex-shrink-0" />
-                <span className="truncate">24h Express Ready</span>
+                <span className="md:truncate">24h Express Ready</span>
               </div>
-              <div className="flex items-center justify-end sm:justify-start gap-2 ml-1.5">
+              <div className="flex items-center gap-1.5 md:gap-2 md:justify-start md:ml-1.5">
                 <Sparkles size={16} className="text-[#E5382C] flex-shrink-0" />
-                <span className="truncate">Design Preview</span>
+                <span className="md:truncate">Design Preview</span>
               </div>
             </div>
           </div>
