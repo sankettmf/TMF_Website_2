@@ -70,7 +70,7 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
     womens: {
       title: 'Female White Casual Tucked-in T-Shirt',
       uid: 'fcbc4777e10144ec9a51d8a2b0204c28',
-      cameraDistanceMultiplier: 1.14,
+      cameraDistanceMultiplier: 1.32,
     },
   },
   // 2. Collared Polo
