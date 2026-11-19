@@ -465,7 +465,7 @@ export const TShirtCustomizer: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start lg:items-stretch">
           {/* Left Column: 3D Interactive Canvas & Model Viewer */}
           <div className="lg:col-span-7 flex flex-col items-center">
             {/* Top Toolbar: Men's / Women's [M] / [W] Model Selector & 3D/2D Toggle */}
@@ -718,8 +718,8 @@ export const TShirtCustomizer: React.FC = () => {
 
 
             {/* ADJUSTABLE POSITION SELECTOR: Quick Placement Presets */}
-            <div className="w-full mt-3.5 bg-white p-4 rounded-2xl border border-[#E8E4DC] shadow-sm">
-              <div className="flex items-center justify-between mb-3">
+            <div className="w-full mt-2.5 bg-white p-3.5 rounded-2xl border border-[#E8E4DC] shadow-sm">
+              <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-1.5">
                   <CornerDownRight size={14} className="text-[#E5382C]" />
                   <span className="text-xs font-bold text-[#141414]">Adjustable Design Position:</span>
@@ -730,13 +730,13 @@ export const TShirtCustomizer: React.FC = () => {
               </div>
 
               {/* 6 Quick Position Presets */}
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
                 {POSITION_PRESETS.map((p) => (
                   <button
                     key={p.id}
                     type="button"
                     onClick={() => applyPreset(p)}
-                    className={`py-2 px-1.5 rounded-lg text-center text-[11px] font-bold transition-all border ${
+                    className={`py-1.5 px-1.5 rounded-lg text-center text-[11px] font-bold transition-all border ${
                       activePreset === p.id
                         ? 'border-[#E5382C] bg-[#FFF5F4] text-[#E5382C] shadow-sm'
                         : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56] hover:border-[#D5CEBF] hover:text-[#141414]'
@@ -748,7 +748,7 @@ export const TShirtCustomizer: React.FC = () => {
               </div>
 
               {/* Precision Coordinate Sliders (X, Y, Size, Rotation) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-3.5 pt-3.5 border-t border-[#F0ECE4]">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-3 pt-3 border-t border-[#F0ECE4]">
                 <div>
                   <div className="flex justify-between text-[11px] font-semibold text-[#736E65] mb-1">
                     <span>X Position</span>
@@ -819,10 +819,10 @@ export const TShirtCustomizer: React.FC = () => {
           </div>
 
           {/* Right Column: Customization Controls & Wholesale Quote Generator */}
-          <div className="lg:col-span-5 bg-white border border-[#E8E4DC] rounded-2xl p-5 sm:p-6 lg:p-7 space-y-6 shadow-atelier">
+          <div className="lg:col-span-5 bg-white border border-[#E8E4DC] rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-3.5 shadow-atelier">
             {/* Header: APPAREL SILHOUETTE SELECTOR (Crewneck Tee - Primary, Collared Polo, Warm Hoodie) */}
             <div>
-              <div className="flex items-center justify-between mb-2.5">
+              <div className="flex items-center justify-between mb-1.5">
                 <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block">
                   Apparel Silhouette
                 </label>
@@ -832,7 +832,7 @@ export const TShirtCustomizer: React.FC = () => {
               </div>
 
               {/* 3 Silhouette Buttons: Crewneck Tee (Primary), Collared Polo, Warm Hoodie */}
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: 'tshirt', label: 'Crewneck Tee', isPrimary: true },
                   { id: 'polo', label: 'Collared Polo', isPrimary: false },
@@ -842,7 +842,7 @@ export const TShirtCustomizer: React.FC = () => {
                     key={type.id}
                     type="button"
                     onClick={() => setShirtType(type.id as any)}
-                    className={`py-2.5 px-2.5 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center text-center gap-0.5 ${
+                    className={`py-2 px-2 rounded-xl border text-xs font-bold transition-all flex flex-col items-center justify-center text-center gap-0.5 ${
                       shirtType === type.id
                         ? 'border-[#E5382C] bg-[#FFF5F4] text-[#E5382C] shadow-sm ring-1 ring-[#E5382C]/30'
                         : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56] hover:border-[#D5CEBF] hover:text-[#141414]'
@@ -860,15 +860,15 @@ export const TShirtCustomizer: React.FC = () => {
             </div>
 
             {/* Design Asset Toggle (Custom Text vs Upload Graphic) */}
-            <div className="pt-5 border-t border-[#F0ECE4]">
-              <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2.5">
+            <div className="pt-3.5 border-t border-[#F0ECE4]">
+              <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2">
                 Artwork / Custom Content
               </label>
-              <div className="flex items-center gap-2.5 mb-3.5">
+              <div className="flex items-center gap-2 mb-2.5">
                 <button
                   type="button"
                   onClick={() => setActiveTab('text')}
-                  className={`flex-1 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
+                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
                     activeTab === 'text'
                       ? 'border-[#141414] bg-[#141414] text-white shadow-sm'
                       : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56]'
@@ -880,7 +880,7 @@ export const TShirtCustomizer: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('image')}
-                  className={`flex-1 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
+                  className={`flex-1 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2 border transition-all ${
                     activeTab === 'image'
                       ? 'border-[#141414] bg-[#141414] text-white shadow-sm'
                       : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56]'
@@ -892,33 +892,33 @@ export const TShirtCustomizer: React.FC = () => {
               </div>
 
               {activeTab === 'text' ? (
-                <div className="space-y-3.5 p-4 bg-[#f8fafc] rounded-xl border border-[#E8E4DC]">
+                <div className="space-y-2.5 p-3 bg-[#f8fafc] rounded-xl border border-[#E8E4DC]">
                   <input
                     type="text"
                     value={customText}
                     onChange={(e) => setCustomText(e.target.value)}
                     placeholder="Enter slogan or brand name..."
-                    className="w-full bg-white border border-[#E8E4DC] rounded-lg px-3.5 py-2 text-sm text-[#141414] font-medium normal-case focus:outline-none focus:border-[#E5382C]"
+                    className="w-full bg-white border border-[#E8E4DC] rounded-lg px-3 py-1.5 text-sm text-[#141414] font-medium normal-case focus:outline-none focus:border-[#E5382C]"
                   />
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2.5">
                     <select
                       value={fontFamily}
                       onChange={(e) => setFontFamily(e.target.value)}
-                      className="bg-white border border-[#E8E4DC] text-xs font-semibold text-[#141414] rounded-xl px-3 py-2 focus:outline-none cursor-pointer"
+                      className="bg-white border border-[#E8E4DC] text-xs font-semibold text-[#141414] rounded-xl px-2.5 py-1.5 focus:outline-none cursor-pointer"
                     >
                       {fonts.map((f) => (
                         <option key={f.value} value={f.value}>{f.label}</option>
                       ))}
                     </select>
 
-                    <div className="flex items-center gap-2 ml-auto">
+                    <div className="flex items-center gap-1.5 ml-auto">
                       <span className="text-[11px] text-[#736E65] font-semibold">Ink:</span>
                       {['#141414', '#E5382C', '#FFFFFF', '#FFB800', '#B6D926', '#1B2945'].map((color) => (
                         <button
                           key={color}
                           type="button"
                           onClick={() => setTextColor(color)}
-                          className={`w-5.5 h-5.5 rounded-full border shadow-sm transition-transform ${
+                          className={`w-5 h-5 rounded-full border shadow-sm transition-transform ${
                             textColor === color ? 'border-[#141414] scale-120' : 'border-slate-300'
                           }`}
                           style={{ backgroundColor: color }}
@@ -929,7 +929,7 @@ export const TShirtCustomizer: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="p-4 bg-[#f8fafc] rounded-2xl border border-[#E8E4DC] text-center">
+                <div className="p-3.5 bg-[#f8fafc] rounded-2xl border border-[#E8E4DC] text-center">
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -943,7 +943,7 @@ export const TShirtCustomizer: React.FC = () => {
                         <img
                           src={uploadedImage}
                           alt="Uploaded artwork preview"
-                          className="w-12 h-12 object-contain rounded-lg bg-white p-1 border border-[#E8E4DC]"
+                          className="w-11 h-11 object-contain rounded-lg bg-white p-1 border border-[#E8E4DC]"
                         />
                         <div className="text-left">
                           <span className="text-xs text-[#141414] font-bold block">Artwork Attached</span>
@@ -962,9 +962,9 @@ export const TShirtCustomizer: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full py-4 border-2 border-dashed border-[#D5CEBF] hover:border-[#E5382C] rounded-xl flex flex-col items-center justify-center gap-1 transition-colors bg-white"
+                      className="w-full py-3.5 border-2 border-dashed border-[#D5CEBF] hover:border-[#E5382C] rounded-xl flex flex-col items-center justify-center gap-1 transition-colors bg-white"
                     >
-                      <ImageIcon size={22} className="text-[#8C867A]" />
+                      <ImageIcon size={20} className="text-[#8C867A]" />
                       <span className="text-xs text-[#141414] font-bold">Upload Vector or PNG Graphic</span>
                       <span className="text-[10px] text-[#736E65]">Supports SVG, PNG, AI, JPEG (300 DPI)</span>
                     </button>
@@ -974,18 +974,18 @@ export const TShirtCustomizer: React.FC = () => {
             </div>
 
             {/* Size & Print Placement Selection */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-5 border-t border-[#F0ECE4]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3.5 border-t border-[#F0ECE4]">
               <div>
-                <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2.5">
+                <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2">
                   Garment Size
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {sizes.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => setSize(s)}
-                      className={`px-3 py-1.5 text-xs rounded-lg border font-bold transition-colors ${
+                      className={`px-2.5 py-1 text-xs rounded-lg border font-bold transition-colors ${
                         size === s
                           ? 'border-[#E5382C] bg-[#E5382C] text-white shadow-sm'
                           : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56]'
@@ -998,16 +998,16 @@ export const TShirtCustomizer: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2.5">
+                <label className="text-xs font-bold text-[#736E65] uppercase tracking-wider block mb-2">
                   Print Placement
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5">
                   {(['front', 'back', 'both'] as const).map((p) => (
                     <button
                       key={p}
                       type="button"
                       onClick={() => setPlacement(p)}
-                      className={`flex-1 py-1.5 text-xs rounded-lg border font-bold capitalize transition-colors ${
+                      className={`flex-1 py-1 text-xs rounded-lg border font-bold capitalize transition-colors ${
                         placement === p
                           ? 'border-[#E5382C] bg-[#FFF5F4] text-[#E5382C]'
                           : 'border-[#E8E4DC] bg-[#f8fafc] text-[#635F56]'
@@ -1021,7 +1021,7 @@ export const TShirtCustomizer: React.FC = () => {
             </div>
 
             {/* Tiered Wholesale Quantity Slider */}
-            <div className="space-y-2.5 pt-5 border-t border-[#F0ECE4]">
+            <div className="space-y-2 pt-3.5 border-t border-[#F0ECE4]">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-[#736E65] uppercase tracking-wider">Quantity</span>
                 <span className="text-[#E5382C] font-bold">
@@ -1045,7 +1045,7 @@ export const TShirtCustomizer: React.FC = () => {
             </div>
 
             {/* Price Estimate Summary & WhatsApp Direct Order Link */}
-            <div className="p-4 bg-[#f8fafc] rounded-xl border border-[#E8E4DC] flex items-center justify-between gap-3">
+            <div className="p-3.5 bg-[#f8fafc] rounded-xl border border-[#E8E4DC] flex items-center justify-between gap-3">
               <div>
                 <span className="text-[11px] text-[#736E65] uppercase tracking-wider font-semibold block">
                   Total Quote Estimate
