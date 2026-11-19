@@ -37,7 +37,7 @@ export const ContactSection: React.FC = () => {
               {/* Info Items */}
               <div className="space-y-4 pt-1">
                 {/* Address */}
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <MapPin size={18} />
                   </div>
@@ -50,7 +50,7 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 {/* Phone & WhatsApp */}
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Phone size={18} />
                   </div>
@@ -66,7 +66,7 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 {/* Email */}
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Mail size={18} />
                   </div>
@@ -82,7 +82,7 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 {/* Hours */}
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Clock size={18} />
                   </div>
