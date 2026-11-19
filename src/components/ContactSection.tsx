@@ -22,7 +22,7 @@ export const ContactSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
           {/* Contact Details Card */}
-          <div className="lg:col-span-5 bg-white border border-[#E8E4DC] rounded-2xl p-6 flex flex-col justify-between shadow-atelier">
+          <div className="lg:col-span-5 bg-white border border-[#E8E4DC] rounded-2xl p-6 flex flex-col shadow-atelier">
             <div className="space-y-4">
               <div>
                 <span className="text-xs font-bold text-[#E5382C] tracking-widest uppercase">
@@ -35,17 +35,16 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Info Items */}
-              <div className="space-y-3 pt-1">
+              <div className="space-y-4 pt-1">
                 {/* Address */}
                 <div className="flex items-start gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <MapPin size={18} />
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider">Address</h4>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider leading-tight">Address</h4>
                     <p className="text-sm font-semibold text-[#141414] mt-0.5 leading-snug">
-                      {businessConfig.address.line1}, {businessConfig.address.landmark}, {businessConfig.address.area}, {businessConfig.address.city},<br />
-                      {businessConfig.address.state} - {businessConfig.address.pincode}
+                      {businessConfig.address.line1}, {businessConfig.address.landmark}, {businessConfig.address.area}, {businessConfig.address.city}, {businessConfig.address.state} - {businessConfig.address.pincode}
                     </p>
                   </div>
                 </div>
@@ -55,11 +54,11 @@ export const ContactSection: React.FC = () => {
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Phone size={18} />
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider">Call & WhatsApp</h4>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider leading-tight">Call & WhatsApp</h4>
                     <a
                       href={`tel:+${businessConfig.phoneRaw}`}
-                      className="text-sm font-bold text-[#141414] hover:text-[#E5382C] transition-colors block mt-0.5"
+                      className="text-sm font-bold text-[#141414] hover:text-[#E5382C] transition-colors block mt-0.5 leading-snug"
                     >
                       {businessConfig.phoneDisplay}
                     </a>
@@ -71,11 +70,11 @@ export const ContactSection: React.FC = () => {
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Mail size={18} />
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider">Email Enquiries</h4>
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider leading-tight">Email Enquiries</h4>
                     <a
                       href={`mailto:${businessConfig.email}`}
-                      className="text-sm font-semibold text-[#141414] hover:text-[#E5382C] transition-colors block mt-0.5"
+                      className="text-sm font-semibold text-[#141414] hover:text-[#E5382C] transition-colors block mt-0.5 leading-snug"
                     >
                       {businessConfig.email}
                     </a>
@@ -83,13 +82,13 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 {/* Hours */}
-                <div className="flex items-start gap-3 pb-1">
+                <div className="flex items-start gap-3">
                   <div className="p-2.5 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] text-[#E5382C] flex-shrink-0">
                     <Clock size={18} />
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider">Hours</h4>
-                    <p className="text-sm text-[#141414] font-semibold mt-0.5">
+                  <div className="min-w-0">
+                    <h4 className="text-xs font-bold text-[#736E65] uppercase tracking-wider leading-tight">Hours</h4>
+                    <p className="text-sm text-[#141414] font-semibold mt-0.5 leading-snug">
                       {businessConfig.workingHours.days} : <span className="text-[#E5382C]">{businessConfig.workingHours.time}</span>
                     </p>
                   </div>
@@ -98,7 +97,7 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Direct Buttons */}
-            <div className="mt-4 pt-4 border-t border-[#F0ECE4] space-y-2.5">
+            <div className="mt-5 pt-4 border-t border-[#F0ECE4]">
               <a
                 href={getWhatsAppLink('Hi The Merch Foundry, I would like to visit your workshop or discuss an order.')}
                 target="_blank"
@@ -110,7 +109,7 @@ export const ContactSection: React.FC = () => {
               </a>
 
               {/* Social Links */}
-              <div className="flex items-center justify-center gap-3 pt-2">
+              <div className="mt-4 flex items-center justify-center gap-3">
                 <a
                   href={businessConfig.socials.instagram}
                   target="_blank"
