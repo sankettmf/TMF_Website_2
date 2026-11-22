@@ -42,17 +42,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           <img
             src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
             alt="The Merch Foundry Mark"
-            width={208}
-            height={56}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            onError={(e) => {
-              const img = e.currentTarget;
-              if (img.dataset.fallbackApplied === '1') return;
-              img.dataset.fallbackApplied = '1';
-              img.src = publicAsset('logo.png');
-            }}
             className="w-full h-full object-contain"
           />
         </div>
@@ -65,17 +54,6 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           <img
             src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
             alt="The Merch Foundry Logo"
-            width={208}
-            height={56}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            onError={(e) => {
-              const img = e.currentTarget;
-              if (img.dataset.fallbackApplied === '1') return;
-              img.dataset.fallbackApplied = '1';
-              img.src = publicAsset('logo.png');
-            }}
             className="w-full h-full object-contain filter drop-shadow-sm"
           />
         </div>

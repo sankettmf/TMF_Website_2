@@ -83,9 +83,8 @@ export const businessConfig: BusinessConfig = {
  * Helper to resolve files in public/ cleanly across custom domains and subpath deployments
  */
 export const publicAsset = (relativePath: string): string => {
-  const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
   const cleanPath = relativePath.replace(/^\/+/, '');
-  return `${base}${cleanPath}`;
+  return `${import.meta.env.BASE_URL}${cleanPath}`;
 };
 
 /**

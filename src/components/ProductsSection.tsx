@@ -61,17 +61,9 @@ export const ProductsSection: React.FC = () => {
                   <img
                     src={product.imagePlaceholder}
                     alt={product.name}
-                    width={800}
-                    height={600}
                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                    loading="eager"
-                    decoding="async"
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      if (img.dataset.fallbackApplied === '1') return;
-                      img.dataset.fallbackApplied = '1';
-                      img.src = product.fallbackImage;
-                    }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent pointer-events-none" />
                   
