@@ -206,6 +206,15 @@ export const TShirtCustomizer: React.FC = () => {
   const [scale, setScale] = useState<number>(isInitialMobile ? 61 : 100); // 50% - 150%
   const [rotation, setRotation] = useState<number>(0); // -45 deg to +45 deg
   const hasUserModifiedPlacementRef = useRef(false);
+  const hasUserModifiedScaleRef = useRef(false);
+  const hasUserModifiedRotationRef = useRef(false);
+  const sliderTouchGuardRef = useRef<{
+    startX: number;
+    startY: number;
+    initialValue: number;
+    isVerticalScroll: boolean;
+    isHorizontalDrag: boolean;
+  } | null>(null);
 
   // 3D model readiness state (keeps design overlay hidden until 3D viewer is ready)
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -361,11 +370,70 @@ export const TShirtCustomizer: React.FC = () => {
   // Apply a preset position
   const applyPreset = (preset: PositionPreset) => {
     hasUserModifiedPlacementRef.current = true;
+    hasUserModifiedScaleRef.current = true;
+    hasUserModifiedRotationRef.current = false;
     setActivePreset(preset.id);
     setPosX(preset.x);
     setPosY(preset.y);
     setScale(Math.round(preset.scale * 100));
     setRotation(0);
+  };
+
+  // Guard mobile (< md) range sliders against accidental value jumps during vertical page scrolling
+  const handleRangeTouchStart = (e: React.TouchEvent<HTMLInputElement>, currentVal: number) => {
+    if (!isMobileViewport) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    sliderTouchGuardRef.current = {
+      startX: touch.clientX,
+      startY: touch.clientY,
+      initialValue: currentVal,
+      isVerticalScroll: false,
+      isHorizontalDrag: false,
+    };
+  };
+
+  const handleRangeTouchMove = (
+    e: React.TouchEvent<HTMLInputElement>,
+    restoreValue: (val: number) => void
+  ) => {
+    if (!isMobileViewport || !sliderTouchGuardRef.current) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    const dx = Math.abs(touch.clientX - sliderTouchGuardRef.current.startX);
+    const dy = Math.abs(touch.clientY - sliderTouchGuardRef.current.startY);
+
+    if (!sliderTouchGuardRef.current.isHorizontalDrag && dy > 6 && dy > dx) {
+      sliderTouchGuardRef.current.isVerticalScroll = true;
+      restoreValue(sliderTouchGuardRef.current.initialValue);
+    } else if (dx > 6 && dx >= dy && !sliderTouchGuardRef.current.isVerticalScroll) {
+      sliderTouchGuardRef.current.isHorizontalDrag = true;
+    }
+  };
+
+  const handleRangeTouchEnd = (
+    onCommit?: () => void,
+    restoreValue?: (val: number) => void
+  ) => {
+    if (!isMobileViewport) {
+      onCommit?.();
+      return;
+    }
+    const guard = sliderTouchGuardRef.current;
+    sliderTouchGuardRef.current = null;
+    if (guard?.isVerticalScroll) {
+      restoreValue?.(guard.initialValue);
+      return;
+    }
+    onCommit?.();
+  };
+
+  const handleRangeTouchCancel = (restoreValue: (val: number) => void) => {
+    const guard = sliderTouchGuardRef.current;
+    sliderTouchGuardRef.current = null;
+    if (isMobileViewport && guard) {
+      restoreValue(guard.initialValue);
+    }
   };
 
   // Dragging handlers for artwork decal body and top drag bar on the 3D model
@@ -460,6 +528,7 @@ export const TShirtCustomizer: React.FC = () => {
     const ratio = projDist / initDist;
     const nextScale = Math.min(Math.max(Math.round(initScale * ratio), 50), 150);
     hasUserModifiedPlacementRef.current = true;
+    hasUserModifiedScaleRef.current = true;
     setScale(nextScale);
   };
 
@@ -746,11 +815,18 @@ export const TShirtCustomizer: React.FC = () => {
                       />
                     ) : (
                       <div
-                        className="text-center font-bold tracking-wider break-words select-none pointer-events-none px-1 normal-case"
+                        className="max-w-full text-center font-bold tracking-wider break-words select-none pointer-events-none px-1 normal-case"
                         style={{
                           fontFamily: fontFamily === 'Permanent Marker' ? '"Permanent Marker", cursive' : fontFamily,
                           color: textColor,
-                          fontSize: customText.length > 14 ? '18px' : customText.length > 8 ? '23px' : '28px',
+                          fontSize:
+                            customText.length > 14
+                              ? '18px'
+                              : customText.length > 8
+                              ? '23px'
+                              : isMobileViewport
+                              ? '23px'
+                              : '28px',
                           lineHeight: 1.05,
                           textShadow:
                             shirtColor === '#FFFFFF'
@@ -839,12 +915,26 @@ export const TShirtCustomizer: React.FC = () => {
                     min="20"
                     max="80"
                     value={posX}
+                    onTouchStart={(e) => handleRangeTouchStart(e, posX)}
+                    onTouchMove={(e) => handleRangeTouchMove(e, setPosX)}
+                    onTouchEnd={() =>
+                      handleRangeTouchEnd(
+                        () => {
+                          hasUserModifiedPlacementRef.current = true;
+                        },
+                        setPosX
+                      )
+                    }
+                    onTouchCancel={() => handleRangeTouchCancel(setPosX)}
                     onChange={(e) => {
-                      hasUserModifiedPlacementRef.current = true;
+                      if (isMobileViewport && sliderTouchGuardRef.current?.isVerticalScroll) return;
+                      if (!isMobileViewport || !sliderTouchGuardRef.current) {
+                        hasUserModifiedPlacementRef.current = true;
+                      }
                       setPosX(Number(e.target.value));
                       setActivePreset('custom');
                     }}
-                    className="w-full accent-[#E5382C] cursor-pointer"
+                    className="w-full accent-[#E5382C] cursor-pointer touch-pan-y"
                   />
                 </div>
 
@@ -858,12 +948,26 @@ export const TShirtCustomizer: React.FC = () => {
                     min="24"
                     max="74"
                     value={posY}
+                    onTouchStart={(e) => handleRangeTouchStart(e, posY)}
+                    onTouchMove={(e) => handleRangeTouchMove(e, setPosY)}
+                    onTouchEnd={() =>
+                      handleRangeTouchEnd(
+                        () => {
+                          hasUserModifiedPlacementRef.current = true;
+                        },
+                        setPosY
+                      )
+                    }
+                    onTouchCancel={() => handleRangeTouchCancel(setPosY)}
                     onChange={(e) => {
-                      hasUserModifiedPlacementRef.current = true;
+                      if (isMobileViewport && sliderTouchGuardRef.current?.isVerticalScroll) return;
+                      if (!isMobileViewport || !sliderTouchGuardRef.current) {
+                        hasUserModifiedPlacementRef.current = true;
+                      }
                       setPosY(Number(e.target.value));
                       setActivePreset('custom');
                     }}
-                    className="w-full accent-[#E5382C] cursor-pointer"
+                    className="w-full accent-[#E5382C] cursor-pointer touch-pan-y"
                   />
                 </div>
 
@@ -877,11 +981,27 @@ export const TShirtCustomizer: React.FC = () => {
                     min="50"
                     max="150"
                     value={scale}
+                    onTouchStart={(e) => handleRangeTouchStart(e, scale)}
+                    onTouchMove={(e) => handleRangeTouchMove(e, setScale)}
+                    onTouchEnd={() =>
+                      handleRangeTouchEnd(
+                        () => {
+                          hasUserModifiedPlacementRef.current = true;
+                          hasUserModifiedScaleRef.current = true;
+                        },
+                        setScale
+                      )
+                    }
+                    onTouchCancel={() => handleRangeTouchCancel(setScale)}
                     onChange={(e) => {
-                      hasUserModifiedPlacementRef.current = true;
+                      if (isMobileViewport && sliderTouchGuardRef.current?.isVerticalScroll) return;
+                      if (!isMobileViewport || !sliderTouchGuardRef.current) {
+                        hasUserModifiedPlacementRef.current = true;
+                        hasUserModifiedScaleRef.current = true;
+                      }
                       setScale(Number(e.target.value));
                     }}
-                    className="w-full accent-[#E5382C] cursor-pointer"
+                    className="w-full accent-[#E5382C] cursor-pointer touch-pan-y"
                   />
                 </div>
 
@@ -895,8 +1015,25 @@ export const TShirtCustomizer: React.FC = () => {
                     min="-45"
                     max="45"
                     value={rotation}
-                    onChange={(e) => setRotation(Number(e.target.value))}
-                    className="w-full accent-[#E5382C] cursor-pointer"
+                    onTouchStart={(e) => handleRangeTouchStart(e, rotation)}
+                    onTouchMove={(e) => handleRangeTouchMove(e, setRotation)}
+                    onTouchEnd={() =>
+                      handleRangeTouchEnd(
+                        () => {
+                          hasUserModifiedRotationRef.current = true;
+                        },
+                        setRotation
+                      )
+                    }
+                    onTouchCancel={() => handleRangeTouchCancel(setRotation)}
+                    onChange={(e) => {
+                      if (isMobileViewport && sliderTouchGuardRef.current?.isVerticalScroll) return;
+                      if (!isMobileViewport || !sliderTouchGuardRef.current) {
+                        hasUserModifiedRotationRef.current = true;
+                      }
+                      setRotation(Number(e.target.value));
+                    }}
+                    className="w-full accent-[#E5382C] cursor-pointer touch-pan-y"
                   />
                 </div>
               </div>
@@ -981,7 +1118,17 @@ export const TShirtCustomizer: React.FC = () => {
                   <input
                     type="text"
                     value={customText}
-                    onChange={(e) => setCustomText(e.target.value)}
+                    onChange={(e) => {
+                      setCustomText(e.target.value);
+                      if (isMobileViewport) {
+                        if (!hasUserModifiedRotationRef.current) {
+                          setRotation(0);
+                        }
+                        if (!hasUserModifiedScaleRef.current) {
+                          setScale(61);
+                        }
+                      }
+                    }}
                     placeholder="Enter slogan or brand name..."
                     className="w-full bg-white border border-[#E8E4DC] rounded-lg px-3 py-1.5 text-sm text-[#141414] font-medium normal-case focus:outline-none focus:border-[#E5382C]"
                   />
