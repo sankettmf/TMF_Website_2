@@ -633,14 +633,19 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   }
 
   .step-connector-vertical-wrapper {
-    top: calc(100% + 5px);
+    top: calc(100% + 1px);
     bottom: auto;
     width: 1rem;
-    height: 1.25rem;
+    height: calc(1.75rem + 3px);
     overflow: hidden;
     z-index: 0;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  }
+
+  .step-connector-vertical-wrapper .step-dotted-flow-line-vertical {
+    position: relative;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
   }
 }
 
