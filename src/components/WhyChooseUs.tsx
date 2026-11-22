@@ -1,8 +1,65 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { whyChooseUsCards } from '../data/merchData';
 import { ShieldCheck, Sparkle, PackageCheck, Zap, BadgePercent, Palette } from 'lucide-react';
 
 export const WhyChooseUs: React.FC = () => {
+  const [activeMobileCard, setActiveMobileCard] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(min-width: 768px)');
+    let rafId: number | null = null;
+
+    const updateActiveCard = () => {
+      rafId = null;
+      if (mql.matches) {
+        setActiveMobileCard(null);
+        return;
+      }
+
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+      const maxFocusDistance = viewportHeight * 0.34;
+
+      let closestIdx: number | null = null;
+      let closestDist = Infinity;
+
+      cardRefs.current.forEach((card, idx) => {
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        if (rect.bottom < viewportHeight * 0.2 || rect.top > viewportHeight * 0.8) {
+          return;
+        }
+        const cardCenter = (rect.top + rect.bottom) / 2;
+        const dist = Math.abs(cardCenter - viewportCenter);
+        if (dist <= maxFocusDistance && dist < closestDist) {
+          closestDist = dist;
+          closestIdx = idx;
+        }
+      });
+
+      setActiveMobileCard(closestIdx);
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(updateActiveCard);
+    };
+
+    updateActiveCard();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+    mql.addEventListener('change', updateActiveCard);
+
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      mql.removeEventListener('change', updateActiveCard);
+    };
+  }, []);
+
   const getIcon = (iconName: string, idx: number) => {
     const delayClass = `step-icon-${(idx % 6) + 1}`;
     const baseClass = `w-6 h-6 text-[#E5382C] step-icon-svg ${delayClass}`;
@@ -36,13 +93,18 @@ export const WhyChooseUs: React.FC = () => {
           {whyChooseUsCards.map((card, idx) => (
             <div
               key={idx}
-              className="bg-white border border-[#E8E4DC] rounded-2xl p-5 sm:p-6 shadow-atelier shadow-atelier-hover transition-all duration-300 flex flex-col justify-between group"
+              ref={(el) => {
+                cardRefs.current[idx] = el;
+              }}
+              className={`bg-white border border-[#E8E4DC] rounded-2xl p-5 sm:p-6 shadow-atelier shadow-atelier-hover transition-all duration-300 flex flex-col justify-between group ${
+                activeMobileCard === idx ? 'mobile-step-active' : ''
+              }`}
             >
               <div>
                 <div className="w-11 h-11 rounded-xl bg-[#FAF6ED] border border-[#EBE3D3] flex items-center justify-center mb-4 step-icon-badge group-hover:scale-110 transition-all duration-300">
                   {getIcon(card.icon, idx)}
                 </div>
-                <h3 className="text-lg font-bold font-display text-[#141414] mb-2 group-hover:text-[#E5382C] transition-colors">
+                <h3 className="text-lg font-bold font-display text-[#141414] mb-2 group-hover:text-[#E5382C] transition-colors step-title">
                   {card.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#635F56] leading-relaxed">
