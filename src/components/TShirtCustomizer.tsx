@@ -35,6 +35,7 @@ interface ApparelModelData {
   title: string;
   uid: string;
   cameraDistanceMultiplier?: number;
+  mobileCameraDistanceMultiplier?: number;
 }
 
 const DEFAULT_CAMERA_DISTANCE_MULTIPLIER = 1.14;
@@ -71,6 +72,7 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
       title: 'Female White Casual Tucked-in T-Shirt',
       uid: 'fcbc4777e10144ec9a51d8a2b0204c28',
       cameraDistanceMultiplier: 1.32,
+      mobileCameraDistanceMultiplier: 1.75,
     },
   },
   // 2. Collared Polo
@@ -84,6 +86,7 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
       title: 'Women Classic Strip Polo Shirt',
       uid: '43470f9b12b64253bdeb41d337e7c9a3',
       cameraDistanceMultiplier: 1.14,
+      mobileCameraDistanceMultiplier: 1.5,
     },
   },
   // 3. Warm Hoodie
@@ -97,6 +100,7 @@ const APPAREL_MODELS: Record<'tshirt' | 'polo' | 'hoodie', { mens: ApparelModelD
       title: 'Women Hooded T-Shirt',
       uid: '297d2abf5bb9475ab5fd0eb1bc0fee4f',
       cameraDistanceMultiplier: 1.16,
+      mobileCameraDistanceMultiplier: 1.52,
     },
   },
 };
@@ -191,6 +195,7 @@ export const TShirtCustomizer: React.FC = () => {
 
   const isInitialMobile =
     typeof window !== 'undefined' && !window.matchMedia('(min-width: 768px)').matches;
+  const [isMobileViewport, setIsMobileViewport] = useState<boolean>(isInitialMobile);
 
   // Adjustable Placement Coordinates & Transform State
   const [activePreset, setActivePreset] = useState<string>(
@@ -264,7 +269,9 @@ export const TShirtCustomizer: React.FC = () => {
   const activeModel = APPAREL_MODELS[shirtType][modelGender];
   const activeModelUid = activeModel.uid;
   const activeCameraMultiplier =
-    activeModel.cameraDistanceMultiplier ?? DEFAULT_CAMERA_DISTANCE_MULTIPLIER;
+    isMobileViewport && activeModel.mobileCameraDistanceMultiplier !== undefined
+      ? activeModel.mobileCameraDistanceMultiplier
+      : (activeModel.cameraDistanceMultiplier ?? DEFAULT_CAMERA_DISTANCE_MULTIPLIER);
 
   useEffect(() => {
     let cancelled = false;
@@ -333,6 +340,7 @@ export const TShirtCustomizer: React.FC = () => {
     if (typeof window === 'undefined') return;
     const mql = window.matchMedia('(min-width: 768px)');
     const handleViewportChange = (e: MediaQueryListEvent) => {
+      setIsMobileViewport(!e.matches);
       if (hasUserModifiedPlacementRef.current) return;
       if (e.matches) {
         setActivePreset('center-chest');
@@ -529,7 +537,7 @@ export const TShirtCustomizer: React.FC = () => {
             <Sparkles size={13} />
             <span>3D Interactive Atelier · Real-Time Fitting</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#141414] font-display tracking-tight">
+          <h2 className="mt-3 md:mt-0 text-3xl sm:text-4xl font-extrabold text-[#141414] font-display tracking-tight">
             CUSTOM MERCH <span className="text-[#E5382C]">DESIGNER</span>
           </h2>
           <p className="text-sm sm:text-base text-[#635F56] leading-relaxed">
