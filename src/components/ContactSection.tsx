@@ -190,7 +190,7 @@ export const ContactSection: React.FC = () => {
             <div className="px-4 py-3 bg-[#f8fafc] border-b border-[#E8E4DC] flex items-center justify-between">
               <div className="flex items-center gap-2 text-xs text-[#141414] font-semibold">
                 <span className="w-2 h-2 rounded-full bg-[#E5382C]" />
-                <span>Swami Park, Dhruv Nagar, Nashik</span>
+                <span>TMF, Nashik!</span>
               </div>
               <a
                 href={businessConfig.socials.maps}
