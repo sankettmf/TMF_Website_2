@@ -9,6 +9,15 @@ import refMugPrintingImg from '../assets/images/ref_mug_printing_1792144778250.j
 import refBottlePrintingImg from '../assets/images/ref_bottle_printing_1792144778432.jpg';
 import refMousepadPrintingImg from '../assets/images/ref_mousepad_printing_1792144779611.jpg';
 import refTrophyPrintingImg from '../assets/images/ref_trophy_printing_1792144780032.jpg';
+import productDtfTshirtImg from '../assets/images/product_dtf_tshirt_1792140529411.jpg';
+import productCustomCapImg from '../assets/images/product_custom_cap_1792140530026.jpg';
+import productPhotoMugImg from '../assets/images/product_photo_mug_1792140531388.jpg';
+import productSipperBottlesImg from '../assets/images/product_sipper_bottles_1792140531064.jpg';
+import productDeskMousepadImg from '../assets/images/product_desk_mousepad_1792140532645.jpg';
+import productAwardTrophyImg from '../assets/images/product_award_trophy_1792140532400.jpg';
+import dtfStreetwearWhiteImg from '../assets/images/dtf_streetwear_white_1792140693459.jpg';
+import dtfCharcoalBlackImg from '../assets/images/dtf_charcoal_black_1792140696631.jpg';
+import dtfTealRetroSunImg from '../assets/images/dtf_teal_retro_sun_1792140697365.jpg';
 
 export interface ProductItem {
   id: string;
@@ -22,6 +31,7 @@ export interface ProductItem {
   badge?: string;
   features: string[];
   imagePlaceholder: string;
+  fallbackImage: string;
 }
 
 export interface ShirtSlide {
@@ -40,6 +50,7 @@ export interface GalleryItem {
   category: 'T-Shirts' | 'Caps' | 'Mugs' | 'Bottles' | 'Others';
   method: string;
   imageUrl: string;
+  fallbackImage: string;
   client: string;
 }
 
@@ -76,7 +87,8 @@ export const merchProducts: ProductItem[] = [
       'Zero Minimum Order – Single to Bulk Runs',
       'Bio-washed, Preshrunk & Anti-Pill Fabric'
     ],
-    imagePlaceholder: publicAsset('assets/aistudio/download__10__18ea2989.jpg')
+    imagePlaceholder: publicAsset('assets/aistudio/download__10__18ea2989.jpg'),
+    fallbackImage: productDtfTshirtImg
   },
   {
     id: 'caps',
@@ -94,7 +106,8 @@ export const merchProducts: ProductItem[] = [
       'High-precision Front Panel Sublimation Printing',
       'Adjustable Snapback & Brass Buckle Closures'
     ],
-    imagePlaceholder: refCapPrintingImg
+    imagePlaceholder: refCapPrintingImg,
+    fallbackImage: productCustomCapImg
   },
   {
     id: 'mugs',
@@ -112,7 +125,8 @@ export const merchProducts: ProductItem[] = [
       'Vibrant Edge-to-Edge 300+ DPI Photo Wrap',
       'Color-Lock Scratch-Resistant Glaze'
     ],
-    imagePlaceholder: refMugPrintingImg
+    imagePlaceholder: refMugPrintingImg,
+    fallbackImage: productPhotoMugImg
   },
   {
     id: 'bottles',
@@ -130,7 +144,8 @@ export const merchProducts: ProductItem[] = [
       'Durable, protective exterior finish',
       'Custom names, logos, and bulk corporate orders'
     ],
-    imagePlaceholder: refBottlePrintingImg
+    imagePlaceholder: refBottlePrintingImg,
+    fallbackImage: productSipperBottlesImg
   },
   {
     id: 'mouse-pads',
@@ -148,7 +163,8 @@ export const merchProducts: ProductItem[] = [
       'Precision Anti-Fray Stitched Edge Seams',
       'Washable & Fade-Resistant HD Printing'
     ],
-    imagePlaceholder: refMousepadPrintingImg
+    imagePlaceholder: refMousepadPrintingImg,
+    fallbackImage: productDeskMousepadImg
   },
   {
     id: 'trophies',
@@ -166,7 +182,8 @@ export const merchProducts: ProductItem[] = [
       'Suitable for corporate awards, school and sports events, and gifting',
       'Bulk orders only'
     ],
-    imagePlaceholder: refTrophyPrintingImg
+    imagePlaceholder: refTrophyPrintingImg,
+    fallbackImage: productAwardTrophyImg
   }
 ];
 
@@ -285,6 +302,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'T-Shirts',
     method: 'Manga Comic Series — High-Density DTF Print',
     imageUrl: publicAsset('assets/aistudio/download__9__87015125.jpg'),
+    fallbackImage: dtfStreetwearWhiteImg,
     client: 'Anime Streetwear'
   },
   {
@@ -293,6 +311,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'Bottles',
     method: 'Name & Number Customization — Full-Height Rotary Sublimation Print',
     imageUrl: publicAsset('assets/aistudio/Customised_aluminium_bottles_You_can_get_anything_printed_Capacity_600_ml_Material_aluminum_Buy_1_for_260_plus_shipping_Customisation_includes_pic_cartoon_character_and_name_9a62b99c.jpg'),
+    fallbackImage: productSipperBottlesImg,
     client: 'Personalized Sports'
   },
   {
@@ -301,6 +320,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'Caps',
     method: 'Anime Character Series — Precision Front Panel DTF Transfer',
     imageUrl: publicAsset('assets/aistudio/One_Piece_Cap_Cotton_Washed_Cap_Luffy_Zoro_Cartoon_Anime_Figure_Hats_Men_Women_Casual_Trend_d1734e6d.jpg'),
+    fallbackImage: productCustomCapImg,
     client: 'Anime & Streetwear'
   },
   {
@@ -309,6 +329,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'T-Shirts',
     method: 'PAIN TODAY, POWER TOMORROW — Ultra HD Direct-to-Film (DTF) Print',
     imageUrl: publicAsset('assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM_cc2d05b7.jpeg'),
+    fallbackImage: dtfCharcoalBlackImg,
     client: 'Anime Streetwear'
   },
   {
@@ -317,6 +338,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'Mugs',
     method: 'Black Inner & Handle — High-Gloss 360° Sublimation Print',
     imageUrl: publicAsset('assets/aistudio/b834e02b0c643dae1f846eb3aa535fba_c54cf89b.jpg'),
+    fallbackImage: productPhotoMugImg,
     client: 'Pop Culture & Collectibles'
   },
   {
@@ -325,6 +347,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'Others',
     method: 'Hustle Edition — HD Full-Bleed Dye Sublimation Print',
     imageUrl: publicAsset('assets/aistudio/Amazing___mouse_pad_3d807756.jpg'),
+    fallbackImage: productDeskMousepadImg,
     client: 'Gaming & Workspace'
   },
   {
@@ -333,6 +356,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'Others',
     method: 'Employee Recognition Series — Direct UV Flatbed & Foil Accent',
     imageUrl: publicAsset('assets/aistudio/download__8__de0760bc.jpg'),
+    fallbackImage: productAwardTrophyImg,
     client: 'Corporate & Awards'
   },
   {
@@ -341,6 +365,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'T-Shirts',
     method: 'Spiritual Art Series — Vibrant DTF & Sublimation Print',
     imageUrl: publicAsset('assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM__1__259fb5be.jpeg'),
+    fallbackImage: dtfTealRetroSunImg,
     client: 'Divine & Cultural'
   }
 ];

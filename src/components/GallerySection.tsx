@@ -58,8 +58,17 @@ export const GallerySection: React.FC = () => {
               <img
                 src={item.imageUrl}
                 alt={item.title}
+                width={500}
+                height={600}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
+                loading="eager"
+                decoding="async"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackApplied === '1') return;
+                  img.dataset.fallbackApplied = '1';
+                  img.src = item.fallbackImage;
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
@@ -111,6 +120,16 @@ export const GallerySection: React.FC = () => {
               <img
                 src={selectedItem.imageUrl}
                 alt={selectedItem.title}
+                width={800}
+                height={600}
+                loading="eager"
+                decoding="async"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackApplied === '1') return;
+                  img.dataset.fallbackApplied = '1';
+                  img.src = selectedItem.fallbackImage;
+                }}
                 className="w-full h-full object-contain max-h-[60vh] mx-auto"
               />
             </div>

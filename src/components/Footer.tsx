@@ -15,6 +15,16 @@ export const Footer: React.FC = () => {
                 <img
                   src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
                   alt="The Merch Foundry Logo"
+                  width={80}
+                  height={18}
+                  loading="eager"
+                  decoding="async"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.dataset.fallbackApplied === '1') return;
+                    img.dataset.fallbackApplied = '1';
+                    img.src = publicAsset('logo.png');
+                  }}
                   className="w-16 md:w-20 h-auto object-contain filter drop-shadow-sm"
                 />
               </div>

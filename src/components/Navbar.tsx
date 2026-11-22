@@ -49,6 +49,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <img
                 src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
                 alt="The Merch Foundry Logo"
+                width={68}
+                height={15}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackApplied === '1') return;
+                  img.dataset.fallbackApplied = '1';
+                  img.src = publicAsset('logo.png');
+                }}
                 className="w-[68px] h-[15px] -mt-[2px] object-contain filter drop-shadow-sm pointer-events-auto"
               />
             </div>
