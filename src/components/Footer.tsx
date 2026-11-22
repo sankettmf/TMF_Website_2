@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
               Custom apparel and merchandise printing in Nashik, using DTF and sublimation transfer. We serve creators, colleges, brands, and corporate companies, from single pieces to bulk orders.
             </p>
 
-            <div className="flex items-center gap-2.5 pt-2">
+            <div className="flex items-center gap-2.5 pt-2 social-links-row">
               <a
                 href={businessConfig.socials.instagram}
                 target="_blank"

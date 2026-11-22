@@ -109,7 +109,7 @@ export const ContactSection: React.FC = () => {
               </a>
 
               {/* Social Links */}
-              <div className="mt-4 flex items-center justify-center gap-3">
+              <div className="mt-4 flex items-center justify-center gap-3 social-links-row">
                 <a
                   href={businessConfig.socials.instagram}
                   target="_blank"
