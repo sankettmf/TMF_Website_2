@@ -631,5 +631,16 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   .group.mobile-step-active .step-dotted-flow-line-vertical {
     filter: drop-shadow(0 0 4px rgba(229, 56, 44, 0.7));
   }
+
+  .step-connector-vertical-wrapper {
+    top: calc(100% + 5px);
+    bottom: auto;
+    width: 1rem;
+    height: 1.25rem;
+    overflow: hidden;
+    z-index: 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  }
 }
 
