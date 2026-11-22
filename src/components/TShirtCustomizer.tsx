@@ -189,12 +189,18 @@ export const TShirtCustomizer: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'text' | 'image'>('text');
   const [activeView, setActiveView] = useState<'front' | 'back'>('front');
 
+  const isInitialMobile =
+    typeof window !== 'undefined' && !window.matchMedia('(min-width: 768px)').matches;
+
   // Adjustable Placement Coordinates & Transform State
-  const [activePreset, setActivePreset] = useState<string>('center-chest');
-  const [posX, setPosX] = useState<number>(50); // percentage 20% - 80%
-  const [posY, setPosY] = useState<number>(39); // percentage 22% - 74%
-  const [scale, setScale] = useState<number>(100); // 50% - 150%
+  const [activePreset, setActivePreset] = useState<string>(
+    isInitialMobile ? 'custom' : 'center-chest'
+  );
+  const [posX, setPosX] = useState<number>(isInitialMobile ? 51 : 50); // percentage 20% - 80%
+  const [posY, setPosY] = useState<number>(isInitialMobile ? 40 : 39); // percentage 22% - 74%
+  const [scale, setScale] = useState<number>(isInitialMobile ? 61 : 100); // 50% - 150%
   const [rotation, setRotation] = useState<number>(0); // -45 deg to +45 deg
+  const hasUserModifiedPlacementRef = useRef(false);
 
   // 3D model readiness state (keeps design overlay hidden until 3D viewer is ready)
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -323,8 +329,30 @@ export const TShirtCustomizer: React.FC = () => {
     };
   }, [activeModelUid, activeCameraMultiplier]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(min-width: 768px)');
+    const handleViewportChange = (e: MediaQueryListEvent) => {
+      if (hasUserModifiedPlacementRef.current) return;
+      if (e.matches) {
+        setActivePreset('center-chest');
+        setPosX(50);
+        setPosY(39);
+        setScale(100);
+      } else {
+        setActivePreset('custom');
+        setPosX(51);
+        setPosY(40);
+        setScale(61);
+      }
+    };
+    mql.addEventListener('change', handleViewportChange);
+    return () => mql.removeEventListener('change', handleViewportChange);
+  }, []);
+
   // Apply a preset position
   const applyPreset = (preset: PositionPreset) => {
+    hasUserModifiedPlacementRef.current = true;
     setActivePreset(preset.id);
     setPosX(preset.x);
     setPosY(preset.y);
@@ -358,6 +386,7 @@ export const TShirtCustomizer: React.FC = () => {
     const newX = Math.min(Math.max(Math.round(dragStart.initX + deltaX), 22), 78);
     const newY = Math.min(Math.max(Math.round(dragStart.initY + deltaY), 24), 74);
 
+    hasUserModifiedPlacementRef.current = true;
     setPosX(newX);
     setPosY(newY);
     setActivePreset('custom');
@@ -422,6 +451,7 @@ export const TShirtCustomizer: React.FC = () => {
     const projDist = (e.clientX - centerX) * ux + (e.clientY - centerY) * uy;
     const ratio = projDist / initDist;
     const nextScale = Math.min(Math.max(Math.round(initScale * ratio), 50), 150);
+    hasUserModifiedPlacementRef.current = true;
     setScale(nextScale);
   };
 
@@ -802,6 +832,7 @@ export const TShirtCustomizer: React.FC = () => {
                     max="80"
                     value={posX}
                     onChange={(e) => {
+                      hasUserModifiedPlacementRef.current = true;
                       setPosX(Number(e.target.value));
                       setActivePreset('custom');
                     }}
@@ -820,6 +851,7 @@ export const TShirtCustomizer: React.FC = () => {
                     max="74"
                     value={posY}
                     onChange={(e) => {
+                      hasUserModifiedPlacementRef.current = true;
                       setPosY(Number(e.target.value));
                       setActivePreset('custom');
                     }}
@@ -837,7 +869,10 @@ export const TShirtCustomizer: React.FC = () => {
                     min="50"
                     max="150"
                     value={scale}
-                    onChange={(e) => setScale(Number(e.target.value))}
+                    onChange={(e) => {
+                      hasUserModifiedPlacementRef.current = true;
+                      setScale(Number(e.target.value));
+                    }}
                     className="w-full accent-[#E5382C] cursor-pointer"
                   />
                 </div>
