@@ -28,8 +28,8 @@ export interface BusinessConfig {
   };
   socials: {
     instagram: string;
+    facebook: string;
     linkedin: string;
-    facebook?: string;
     whatsapp: string;
     maps: string;
   };
@@ -65,7 +65,8 @@ export const businessConfig: BusinessConfig = {
   },
   socials: {
     instagram: 'https://instagram.com/themerchfoundry',
-    linkedin: 'https://www.linkedin.com/in/the-merch-foundry-3b8337449',
+    facebook: 'https://www.facebook.com/themerchfoundry/',
+    linkedin: 'https://www.linkedin.com/company/the-merch-foundry/',
     whatsapp: 'https://wa.me/919423075173?text=Hello%20The%20Merch%20Foundry%2C%20I%20would%20like%20to%20enquire%20about%20custom%20merchandise.',
     maps: 'https://www.google.com/maps/place/The+Merch+Foundry/@20.0112394,73.7138725,17z/data=!3m1!4b1!4m6!3m5!1s0x3bddedea46bc99d1:0xdd79c79cd35b7c6!8m2!3d20.0112344!4d73.7164528!16s%2Fg%2F11p2gbpkn2?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D'
   },
