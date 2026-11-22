@@ -357,7 +357,7 @@ export const testimonials: Testimonial[] = [
     name: 'Siddharth Deshmukh',
     role: 'Convener',
     organization: 'Sandip University Youth Fest',
-    review: 'We ordered 83 custom oversized tees for our tech symposium. The Merch Foundry delivered 2 days ahead of schedule. The screen-print sharpness and fabric feel were the best we’ve had in 2 years!',
+    review: 'Bought a few custom T-shirts for our group and the stitching, cloth quality, and color sharpness turned out really clean. Truly the best quality custom T-shirt work in Nashik.',
     rating: 5,
     avatarText: 'SD'
   },
@@ -375,7 +375,7 @@ export const testimonials: Testimonial[] = [
     name: 'Aditya Patil',
     role: 'Lead Singer',
     organization: 'Godavari Groove Indie Band',
-    review: 'The 3D mockup tool and the attention to detail on our merch skull back-prints blew us away. The ink red matches our album color code 100%. Highly recommended in Nashik!',
+    review: "Got custom T-shirts printed here on short notice and didn't expect the quality to be this clean. Definitely the best quality custom merch in Nashik!",
     rating: 5,
     avatarText: 'AP'
   },
@@ -384,7 +384,7 @@ export const testimonials: Testimonial[] = [
     name: 'Neha Shinde',
     role: 'HR Manager',
     organization: 'FinEdge Technologies Nashik',
-    review: 'Seamless bulk welcome kits (hoodie, temperature water bottle, desk pad). The team accommodated our urgent timeline without compromising on packaging quality.',
+    review: "Thank you The Merch Foundry! Bought custom T-shirts from here and the fabric feel and print finish exceeded expectations. Easily the best quality we've seen in Nashik.",
     rating: 5,
     avatarText: 'NS'
   }
