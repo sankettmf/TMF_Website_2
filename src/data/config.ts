@@ -38,6 +38,7 @@ export interface BusinessConfig {
     lng: number;
   };
   mapEmbedUrl: string;
+  mobileMapEmbedUrl: string;
 }
 
 export const businessConfig: BusinessConfig = {
@@ -73,7 +74,9 @@ export const businessConfig: BusinessConfig = {
     lng: 73.7164528
   },
   // Embedded Google Map centered on The Merch Foundry, Dhruv Nagar, Nashik with red pin marker
-  mapEmbedUrl: 'https://maps.google.com/maps?q=The+Merch+Foundry,+Nashik&t=&z=16&ie=UTF8&iwloc=&output=embed'
+  mapEmbedUrl: 'https://maps.google.com/maps?q=The+Merch+Foundry,+Nashik&t=&z=16&ie=UTF8&iwloc=&output=embed',
+  // Mobile neighborhood-level Google Map framing (Gangapur, Sadhana, Someshwar, DMart Anandvalli, Satpur, Shramik Nagar)
+  mobileMapEmbedUrl: 'https://maps.google.com/maps?q=The+Merch+Foundry,+Nashik&t=&z=13&ie=UTF8&iwloc=&output=embed'
 };
 
 /**
