@@ -1,5 +1,5 @@
 import React from 'react';
-import { businessConfig } from '../data/config';
+import { businessConfig, publicAsset } from '../data/config';
 import { merchProducts } from '../data/merchData';
 import { Phone, Mail, Instagram, Facebook, MapPin } from 'lucide-react';
 
@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center shrink-0">
                 <img
-                  src="/assets/aistudio/TMF_Athletic_Logo_56acf51b.png"
+                  src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
                   alt="The Merch Foundry Logo"
                   className="w-16 md:w-20 h-auto object-contain filter drop-shadow-sm"
                 />

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>The Merch Foundry</title>
+    <script>
+      (function () {
+        var knownSections = [
+          'hero',
+          'products',
+          'customizer',
+          'how-it-works',
+          'gallery',
+          'bulk-orders',
+          'faq',
+          'contact',
+        ];
+        var l = window.location;
+        var isGithubPagesSubpath =
+          l.hostname.endsWith('.github.io') && l.pathname.split('/').filter(Boolean).length > 1;
+        var basePath = isGithubPagesSubpath
+          ? '/' + l.pathname.split('/').filter(Boolean)[0] + '/'
+          : '/';
+
+        var relativePath = l.pathname.slice(basePath.length).replace(/^\/+|\/+$/g, '');
+        var matchedSection = knownSections.indexOf(relativePath) !== -1 ? relativePath : '';
+        var hash = l.hash || (matchedSection ? '#' + matchedSection : '');
+
+        if (l.pathname !== basePath) {
+          l.replace(l.protocol + '//' + l.host + basePath + l.search + hash);
+        }
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

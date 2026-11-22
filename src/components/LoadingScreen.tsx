@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { publicAsset } from '../data/config';
 
 interface LoadingScreenProps {
   onComplete: () => void;
@@ -13,16 +14,21 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setIsFadingOut(true);
-          setTimeout(onComplete, 500);
           return 100;
         }
-        return prev + 6;
+        return Math.min(prev + 6, 100);
       });
     }, 40);
 
     return () => clearInterval(timer);
-  }, [onComplete]);
+  }, []);
+
+  useEffect(() => {
+    if (progress < 100) return;
+    setIsFadingOut(true);
+    const completeTimeout = setTimeout(onComplete, 500);
+    return () => clearTimeout(completeTimeout);
+  }, [progress, onComplete]);
 
   return (
     <div
@@ -34,7 +40,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         {/* Silhouette Logo mark */}
         <div className="absolute inset-0 flex items-center justify-center opacity-15 filter grayscale">
           <img
-            src="/assets/aistudio/TMF_Athletic_Logo_56acf51b.png"
+            src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
             alt="The Merch Foundry Mark"
             className="w-full h-full object-contain"
           />
@@ -46,7 +52,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
           style={{ clipPath: `inset(${100 - progress}% 0 0 0)` }}
         >
           <img
-            src="/assets/aistudio/TMF_Athletic_Logo_56acf51b.png"
+            src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
             alt="The Merch Foundry Logo"
             className="w-full h-full object-contain filter drop-shadow-sm"
           />

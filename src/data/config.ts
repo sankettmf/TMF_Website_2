@@ -80,6 +80,14 @@ export const businessConfig: BusinessConfig = {
 };
 
 /**
+ * Helper to resolve files in public/ cleanly across custom domains and subpath deployments
+ */
+export const publicAsset = (relativePath: string): string => {
+  const cleanPath = relativePath.replace(/^\/+/, '');
+  return `${import.meta.env.BASE_URL}${cleanPath}`;
+};
+
+/**
  * Helper to build custom WhatsApp enquiry links
  */
 export const getWhatsAppLink = (message: string) => {

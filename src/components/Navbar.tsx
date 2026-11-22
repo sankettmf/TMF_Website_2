@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { businessConfig, getWhatsAppLink } from '../data/config';
+import { businessConfig, getWhatsAppLink, publicAsset } from '../data/config';
 import { Menu, X, MessageSquare, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
@@ -47,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           <a href="#hero" className="flex items-center gap-2.5 shrink-0">
             <div className="flex items-center shrink-0 transition-transform duration-300 hover:scale-105 cursor-pointer">
               <img
-                src="/assets/aistudio/TMF_Athletic_Logo_56acf51b.png"
+                src={publicAsset('assets/aistudio/TMF_Athletic_Logo_56acf51b.png')}
                 alt="The Merch Foundry Logo"
                 className="w-[68px] h-[15px] -mt-[2px] object-contain filter drop-shadow-sm pointer-events-auto"
               />

@@ -3,6 +3,7 @@
  * All products, 3D showcase slides, testimonials, FAQs, and gallery items.
  */
 
+import { publicAsset } from './config';
 import refCapPrintingImg from '../assets/images/ref_cap_printing_1792144777190.jpg';
 import refMugPrintingImg from '../assets/images/ref_mug_printing_1792144778250.jpg';
 import refBottlePrintingImg from '../assets/images/ref_bottle_printing_1792144778432.jpg';
@@ -75,7 +76,7 @@ export const merchProducts: ProductItem[] = [
       'Zero Minimum Order – Single to Bulk Runs',
       'Bio-washed, Preshrunk & Anti-Pill Fabric'
     ],
-    imagePlaceholder: '/assets/aistudio/download__10__18ea2989.jpg'
+    imagePlaceholder: publicAsset('assets/aistudio/download__10__18ea2989.jpg')
   },
   {
     id: 'caps',
@@ -283,7 +284,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Hoops & Panels Oversized Streetwear Tee',
     category: 'T-Shirts',
     method: 'Manga Comic Series — High-Density DTF Print',
-    imageUrl: '/assets/aistudio/download__9__87015125.jpg',
+    imageUrl: publicAsset('assets/aistudio/download__9__87015125.jpg'),
     client: 'Anime Streetwear'
   },
   {
@@ -291,7 +292,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Custom Football Jersey Sipper Bottles',
     category: 'Bottles',
     method: 'Name & Number Customization — Full-Height Rotary Sublimation Print',
-    imageUrl: '/assets/aistudio/Customised_aluminium_bottles_You_can_get_anything_printed_Capacity_600_ml_Material_aluminum_Buy_1_for_260_plus_shipping_Customisation_includes_pic_cartoon_character_and_name_9a62b99c.jpg',
+    imageUrl: publicAsset('assets/aistudio/Customised_aluminium_bottles_You_can_get_anything_printed_Capacity_600_ml_Material_aluminum_Buy_1_for_260_plus_shipping_Customisation_includes_pic_cartoon_character_and_name_9a62b99c.jpg'),
     client: 'Personalized Sports'
   },
   {
@@ -299,7 +300,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'One Piece Luffy Vintage Washed Cap',
     category: 'Caps',
     method: 'Anime Character Series — Precision Front Panel DTF Transfer',
-    imageUrl: '/assets/aistudio/One_Piece_Cap_Cotton_Washed_Cap_Luffy_Zoro_Cartoon_Anime_Figure_Hats_Men_Women_Casual_Trend_d1734e6d.jpg',
+    imageUrl: publicAsset('assets/aistudio/One_Piece_Cap_Cotton_Washed_Cap_Luffy_Zoro_Cartoon_Anime_Figure_Hats_Men_Women_Casual_Trend_d1734e6d.jpg'),
     client: 'Anime & Streetwear'
   },
   {
@@ -307,7 +308,7 @@ export const galleryItems: GalleryItem[] = [
     title: "Toji 'Discipline' Oversized Tee",
     category: 'T-Shirts',
     method: 'PAIN TODAY, POWER TOMORROW — Ultra HD Direct-to-Film (DTF) Print',
-    imageUrl: '/assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM_cc2d05b7.jpeg',
+    imageUrl: publicAsset('assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM_cc2d05b7.jpeg'),
     client: 'Anime Streetwear'
   },
   {
@@ -315,7 +316,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Marvel Comics Retro Dual-Tone Mug',
     category: 'Mugs',
     method: 'Black Inner & Handle — High-Gloss 360° Sublimation Print',
-    imageUrl: '/assets/aistudio/b834e02b0c643dae1f846eb3aa535fba_c54cf89b.jpg',
+    imageUrl: publicAsset('assets/aistudio/b834e02b0c643dae1f846eb3aa535fba_c54cf89b.jpg'),
     client: 'Pop Culture & Collectibles'
   },
   {
@@ -323,7 +324,7 @@ export const galleryItems: GalleryItem[] = [
     title: "I'll Make Money Custom Mouse Pad",
     category: 'Others',
     method: 'Hustle Edition — HD Full-Bleed Dye Sublimation Print',
-    imageUrl: '/assets/aistudio/Amazing___mouse_pad_3d807756.jpg',
+    imageUrl: publicAsset('assets/aistudio/Amazing___mouse_pad_3d807756.jpg'),
     client: 'Gaming & Workspace'
   },
   {
@@ -331,7 +332,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Custom Crystal Service Award',
     category: 'Others',
     method: 'Employee Recognition Series — Direct UV Flatbed & Foil Accent',
-    imageUrl: '/assets/aistudio/download__8__de0760bc.jpg',
+    imageUrl: publicAsset('assets/aistudio/download__8__de0760bc.jpg'),
     client: 'Corporate & Awards'
   },
   {
@@ -339,7 +340,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Mahadev Serenity Premium Cotton Tee',
     category: 'T-Shirts',
     method: 'Spiritual Art Series — Vibrant DTF & Sublimation Print',
-    imageUrl: '/assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM__1__259fb5be.jpeg',
+    imageUrl: publicAsset('assets/aistudio/WhatsApp_Image_2026-11-18_at_11.39.11_AM__1__259fb5be.jpeg'),
     client: 'Divine & Cultural'
   }
 ];

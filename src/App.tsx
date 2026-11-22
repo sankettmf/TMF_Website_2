@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { MarqueeStrip } from './components/MarqueeStrip';
@@ -18,6 +18,23 @@ import { LoadingScreen } from './components/LoadingScreen';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const scrollToHashSection = () => {
+      const rawHash = window.location.hash;
+      if (!rawHash) return;
+      const targetId = rawHash.replace(/^#\/?/, '');
+      if (!targetId) return;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    scrollToHashSection();
+    window.addEventListener('hashchange', scrollToHashSection);
+    return () => window.removeEventListener('hashchange', scrollToHashSection);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#141414] font-['Plus_Jakarta_Sans',sans-serif] selection:bg-[#E5382C] selection:text-white relative">
