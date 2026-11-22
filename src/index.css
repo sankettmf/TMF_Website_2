@@ -584,4 +584,42 @@ a[class*="bg-[#E5382C]"]:not([class*="rounded-full"]):not(.no-shine):hover::afte
   transform: scaleX(1);
 }
 
+/* ==========================================================================
+   Mobile-Only (< md) Scroll-Center Focus State for How It Works Step Cards
+   ========================================================================== */
+
+@media (max-width: 767.98px) {
+  .shadow-atelier-hover.mobile-step-active {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -6px rgba(28, 25, 23, 0.08), 0 4px 12px -2px rgba(28, 25, 23, 0.03);
+    border-color: #F3D1CE;
+  }
+
+  .group.mobile-step-active .step-icon-badge {
+    transform: scale(1.1);
+    background-color: #FEF2F0;
+    border-color: #F8CBC6;
+    box-shadow: 0 8px 20px -3px rgba(229, 56, 44, 0.22);
+  }
+
+  .group.mobile-step-active .step-icon-svg {
+    animation: step-icon-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    filter: drop-shadow(0 2px 6px rgba(229, 56, 44, 0.35));
+  }
+
+  .group.mobile-step-active .step-number {
+    color: #E5382C;
+    transform: scale(1.06);
+    text-shadow: 0 4px 18px rgba(229, 56, 44, 0.28);
+  }
+
+  .group.mobile-step-active .step-title {
+    color: #E5382C;
+  }
+
+  .group.mobile-step-active .step-dotted-flow-line,
+  .group.mobile-step-active .step-dotted-flow-line-vertical {
+    filter: drop-shadow(0 0 4px rgba(229, 56, 44, 0.7));
+  }
+}
 

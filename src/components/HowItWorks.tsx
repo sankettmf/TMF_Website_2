@@ -1,8 +1,65 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { howItWorksSteps } from '../data/merchData';
 import { MessageSquareShare, FileCheck, Flame, Truck } from 'lucide-react';
 
 export const HowItWorks: React.FC = () => {
+  const [activeMobileStep, setActiveMobileStep] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(min-width: 768px)');
+    let rafId: number | null = null;
+
+    const updateActiveStep = () => {
+      rafId = null;
+      if (mql.matches) {
+        setActiveMobileStep(null);
+        return;
+      }
+
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+      const maxFocusDistance = viewportHeight * 0.34;
+
+      let closestIdx: number | null = null;
+      let closestDist = Infinity;
+
+      cardRefs.current.forEach((card, idx) => {
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        if (rect.bottom < viewportHeight * 0.2 || rect.top > viewportHeight * 0.8) {
+          return;
+        }
+        const cardCenter = (rect.top + rect.bottom) / 2;
+        const dist = Math.abs(cardCenter - viewportCenter);
+        if (dist <= maxFocusDistance && dist < closestDist) {
+          closestDist = dist;
+          closestIdx = idx;
+        }
+      });
+
+      setActiveMobileStep(closestIdx);
+    };
+
+    const scheduleUpdate = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(updateActiveStep);
+    };
+
+    updateActiveStep();
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+    mql.addEventListener('change', updateActiveStep);
+
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      mql.removeEventListener('change', updateActiveStep);
+    };
+  }, []);
+
   const stepIcons = [
     <MessageSquareShare key="1" className="w-6 h-6 text-[#E5382C] step-icon-svg step-icon-1" />,
     <FileCheck key="2" className="w-6 h-6 text-[#E5382C] step-icon-svg step-icon-2" />,
@@ -32,7 +89,12 @@ export const HowItWorks: React.FC = () => {
             {howItWorksSteps.map((step, idx) => (
               <div
                 key={step.step}
-                className="relative bg-white border border-[#E8E4DC] rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-atelier shadow-atelier-hover group"
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                className={`relative bg-white border border-[#E8E4DC] rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 shadow-atelier shadow-atelier-hover group ${
+                  activeMobileStep === idx ? 'mobile-step-active' : ''
+                }`}
               >
                 {/* Continuous Flowing Dotted Connector to Next Step (Tablet & Desktop Horizontal) */}
                 {idx < howItWorksSteps.length - 1 && (
@@ -71,7 +133,7 @@ export const HowItWorks: React.FC = () => {
                   <span className="text-[11px] font-bold text-[#E5382C] uppercase tracking-wider block mb-1">
                     {step.tag}
                   </span>
-                  <h3 className="text-lg font-bold font-display text-[#141414] mb-2 group-hover:text-[#E5382C] transition-colors">
+                  <h3 className="text-lg font-bold font-display text-[#141414] mb-2 group-hover:text-[#E5382C] transition-colors step-title">
                     {step.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-[#635F56] leading-relaxed">
