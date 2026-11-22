@@ -208,6 +208,7 @@ export const TShirtCustomizer: React.FC = () => {
   const hasUserModifiedPlacementRef = useRef(false);
   const hasUserModifiedScaleRef = useRef(false);
   const hasUserModifiedRotationRef = useRef(false);
+  const hasUserModifiedTextColorRef = useRef(false);
   const sliderTouchGuardRef = useRef<{
     startX: number;
     startY: number;
@@ -366,6 +367,16 @@ export const TShirtCustomizer: React.FC = () => {
     mql.addEventListener('change', handleViewportChange);
     return () => mql.removeEventListener('change', handleViewportChange);
   }, []);
+
+  // Default to crisp white text on the dark/grey Men's Collared Polo unless user picks a custom ink color
+  useEffect(() => {
+    if (hasUserModifiedTextColorRef.current) return;
+    if (modelGender === 'mens' && shirtType === 'polo') {
+      setTextColor('#FFFFFF');
+    } else {
+      setTextColor('#141414');
+    }
+  }, [modelGender, shirtType]);
 
   // Apply a preset position
   const applyPreset = (preset: PositionPreset) => {
@@ -1149,7 +1160,10 @@ export const TShirtCustomizer: React.FC = () => {
                         <button
                           key={color}
                           type="button"
-                          onClick={() => setTextColor(color)}
+                          onClick={() => {
+                            hasUserModifiedTextColorRef.current = true;
+                            setTextColor(color);
+                          }}
                           className={`w-5 h-5 rounded-full border shadow-sm transition-transform ${
                             textColor === color ? 'border-[#141414] scale-120' : 'border-slate-300'
                           }`}
